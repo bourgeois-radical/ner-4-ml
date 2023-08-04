@@ -11,7 +11,7 @@ from pathlib import Path
 # from preprocessing import DefaultPreprocess
 
 
-def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False) -> List[Tuple[pathlib.WindowsPath, str]]:
+def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False) -> str:
 
     # transform str path to WindowsPath
     dst_txt_path = Path(dst_txt_path)
