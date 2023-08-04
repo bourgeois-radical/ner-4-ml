@@ -1,0 +1,14 @@
+# Notebooks' rubbish
+.ipynb_checkpoints/
+__pycache__/
+.idea/
+*.pyc
+
+#Don't track sketches of modules
+notebooks/sketches/
+
+# Don't track .pdf files
+*.pdf
+
+# Don't track any .pkl files.
+*.pkl
