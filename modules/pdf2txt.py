@@ -12,7 +12,18 @@ from pathlib import Path
 
 
 def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False) -> str:
+    """
+          ДОПИЛИТЬ ДОКСТРИНГ
+    Parameters
+    ----------
+    src_pdf_path
+    dst_txt_path
+    preprocess
 
+    Returns
+    -------
+
+    """
     # transform str path to WindowsPath
     dst_txt_path = Path(dst_txt_path)
 
