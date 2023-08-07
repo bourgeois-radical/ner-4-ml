@@ -5,22 +5,24 @@ import pickle
 from typing import List, Tuple
 from pypdf import PdfReader
 from pathlib import Path
-# from Crypto.Cipher import AES
-# from pikepdf import Pdf
 
 # from preprocessing import DefaultPreprocess
 
 
 def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False) -> str:
-    """
-          ДОПИЛИТЬ ДОКСТРИНГ
+    """Extracts text from PDF files (one column structure as well as two column structure)
+    and saves it as a .txt file
+
     Parameters
     ----------
-    src_pdf_path
-    dst_txt_path
-    preprocess
+    src_pdf_path: str
+        Path
+    dst_txt_path: str
+    preprocess: bool
 
     Returns
+        str: a massage, which says, whether something went wrong or not.
+
     -------
 
     """
@@ -32,11 +34,10 @@ def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False)
     all_pdf_paths = [x for x in pointer_pdf_paths if x.is_file()]
 
     # extract text from pdf
-    extracted_texts = []
     full_pdf_text = ''
     for single_pdf_path in all_pdf_paths:
 
-        # some pdfs appeared to be encrypted
+        # some pdfs may appear to be encrypted
         if PdfReader(single_pdf_path).is_encrypted:
             print(f'The following file is encrypted: {single_pdf_path}')
             not_all_were_converted = True
@@ -51,9 +52,7 @@ def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False)
             full_pdf_text = full_pdf_text + ' ' + text
 
         # if preprocess:
-
-        # extracted_texts.append((src_pdf_path, full_pdf_text))
-        # full_pdf_text = ''
+        # don't need preprocessing so far, since it depends on a model.
 
         # writing to the .txt file
         dst = str(dst_txt_path / single_pdf_path.name.replace('pdf', 'txt'))
