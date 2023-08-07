@@ -11,7 +11,7 @@ from pathlib import Path
 
 def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False) -> str:
     """Extracts text from PDF files (one column structure as well as two column structure)
-    and saves it as a .txt file
+    and saves it as a .txt file. It is not possible to extract text from encrypted files.
 
     Parameters
     ----------
