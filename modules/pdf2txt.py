@@ -1,7 +1,3 @@
-import pathlib
-import sys
-import pickle
-
 from typing import List, Tuple
 from pypdf import PdfReader
 from pathlib import Path
@@ -26,27 +22,26 @@ def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False)
     -------
 
     """
-    # transform str path to WindowsPath
-    dst_txt_path = Path(dst_txt_path)
 
     # get the path of each and every pdf file
     pointer_pdf_paths = Path(src_pdf_path).glob('**/*')
     all_pdf_paths = [x for x in pointer_pdf_paths if x.is_file()]
 
-    # extract text from pdf
-    full_pdf_text = ''
-    for single_pdf_path in all_pdf_paths:
+    # transform str path to WindowsPath
+    dst_txt_path = Path(dst_txt_path)
 
+    # extract text from pdf
+    not_all_were_converted = False
+    for single_pdf_path in all_pdf_paths:
+        reader = PdfReader(single_pdf_path)
         # some pdfs may appear to be encrypted
-        if PdfReader(single_pdf_path).is_encrypted:
+        if reader.is_encrypted:
             print(f'The following file is encrypted: {single_pdf_path}')
             not_all_were_converted = True
             continue
-        else:
-            reader = PdfReader(single_pdf_path)
-            number_of_pages = len(reader.pages)
 
-        for page_number in range(number_of_pages):
+        full_pdf_text = ''
+        for page_number in range(len(reader.pages)):
             page = reader.pages[page_number]
             text = page.extract_text()
             full_pdf_text = full_pdf_text + ' ' + text
