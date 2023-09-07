@@ -13,7 +13,7 @@ This project initially aimed to utilize NLP techniques to assist non-experts in 
 Clone the repo and try the modules and the notebooks out.
 
 # Data
-[You can download the annotated papers here.](https://drive.google.com/drive/folders/1rzHbflmB7tBSZlLAb6_82hJAo84QbiIY?usp=sharing)
+[You can download the annotated papers and the datasets here.](https://drive.google.com/drive/folders/1RbplC7l-czffKMDa0f5BPHFixxlDAyji?usp=sharing)
 
 Add `corpus/` and `dataset/` folders in the root of the cloned repo.
 
