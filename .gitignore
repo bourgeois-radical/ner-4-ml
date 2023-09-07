@@ -4,11 +4,20 @@ __pycache__/
 .idea/
 *.pyc
 
-#Don't track sketches of modules
+# Don't track sketches of modules
 notebooks/sketches/
+notebooks/bert-finetuned-ner
+
+# Don't track data
+corpus/
+dataset/
+
 
 # Don't track .pdf files
 *.pdf
 
 # Don't track any .pkl files.
 *.pkl
+
+# Don't track any .txt files
+*.txt
