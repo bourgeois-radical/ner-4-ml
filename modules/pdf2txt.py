@@ -1,26 +1,24 @@
-from typing import List, Tuple
 from pypdf import PdfReader
 from pathlib import Path
 
-# from preprocessing import DefaultPreprocess
 
-
-def txt_from_pdf(src_pdf_path: str, dst_txt_path: str, preprocess: bool = False) -> str:
-    """Extracts text from PDF files (one column structure as well as two column structure)
-    and saves it as a .txt file. It is not possible to extract text from encrypted files.
+def txt_from_pdf(src_pdf_path: str, dst_txt_path: str) -> str:
+    """Extracts texts from PDF files (one column structure as well as two column structure)
+    and saves them as .txt files. It is not possible to extract text from encrypted files.
 
     Parameters
     ----------
     src_pdf_path: str
-        Path
+        path to the directory where all PDF-files are stored.
     dst_txt_path: str
-    preprocess: bool
+        path to the directory where the extracted texts are going to be stored.
 
     Returns
-        str: a massage, which says, whether something went wrong or not.
-
     -------
+    A massage about, how successful the extraction has gone.
 
+    In the case there are some encrypted files out there,
+    'NOT all pdf files have been successfully converted to txt files.' will pop up.
     """
 
     # get the path of each and every pdf file

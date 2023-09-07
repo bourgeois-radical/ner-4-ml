@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Dict
 from pathlib import Path
 from nltk.tokenize import sent_tokenize, word_tokenize
 
@@ -7,6 +7,19 @@ class NamedEntities:
 
     @staticmethod
     def initialize_labels(src_path: str, dst_path: str) -> str:
+        """Takes .txt-files and initializes '0' NER-label for further manual annotation.
+
+        Parameters
+        ----------
+        src_path: str
+            path to the directory where all .txt-files are stored.
+        dst_path: str
+            path to the directory where ready for annotation .txt-files are going to be stored.
+
+        Returns
+        -------
+        A massage, telling that the extraction has gone successfully.
+        """
 
         # transform str path to WindowsPath
         dst_path = Path(dst_path)
@@ -51,11 +64,23 @@ class NamedEntities:
                     enumerated_sent = str(sent_num) + ' ' + str(sent_with_ner_tags)
                     txt_file.write("%s\n\n" % enumerated_sent)
 
-        return 'Done'
+        return 'NER labels have been successfully initialized'
 
     @staticmethod
-    def build_dataset(src_path: str) -> Tuple[List[str], List[int]]:
-        """Распарсить проаннотированные данные"""
+    def build_dataset(src_path: str) -> Dict:
+        """Builds dataset with papers' NER-tokens, -labels and -tags.
+        Entity of interest: ML (machine learning algorithms/architectures, like decision trees, RNN etc.)
+
+        Parameters
+        ----------
+        src_path:
+            path to the directory where all annotated .txt-files are stored.
+
+        Returns
+        -------
+        dataset: dict
+            dataset, containing papers' tokens, labels and tags as values of the corresponding keys.
+        """
 
         pointer_pdf_paths = Path(src_path).glob('**/*')
         all_paths = [x for x in pointer_pdf_paths if x.is_file()]
@@ -80,7 +105,7 @@ class NamedEntities:
             # get two lists: tokens and their labels (0 or 1)
             for sent in all_sentences:
 
-                # 44 [('Prediction', 0), ('has', 0), ('been', 0), ('made', 0), ('on', 0)]
+                # "194 [('Simple', 0), ('decision', 1), ('trees', 1), ('usually', 0)]"
                 if len(sent) != 0 and sent.count('[') == 1:
 
                     # delete '[' with the sentence number and ']'
@@ -88,8 +113,6 @@ class NamedEntities:
 
                     # get pairs "(token, label"
                     token_label_pairs = sent.split('),')
-
-                    # print(f"{annotated_ner_txt}: {token_label_pairs} \n")
 
                     # get clean pairs without "("
                     tokens = [x.split("',")[0].strip().replace("('", "") for x in token_label_pairs
@@ -123,18 +146,15 @@ class NamedEntities:
                 elif x == 2:
                     return 'I-ML'
 
-            inside_entity = False
             b_ml_idx = 0
             for idx_snt, sentence in enumerate(one_labeled_paper):
                 for idx_lbl, label in enumerate(sentence):
                     # the beginning of an entity
-                    if (idx_lbl + 1) < len(sentence) and label == 0 and sentence[idx_lbl+1] == 1:  #  wanted to use "next"
-                        # don't need to change label at the beginning
-                        inside_entity = True
+                    if (idx_lbl + 1) < len(sentence) and label == 0 and sentence[idx_lbl+1] == 1:
                         # remember the position of the first token of an entity
                         b_ml_idx = idx_lbl + 1
                     # inside an entity
-                    elif inside_entity and idx_lbl != b_ml_idx and label != 0:
+                    elif idx_lbl != b_ml_idx and label != 0:
                         one_labeled_paper[idx_snt][idx_lbl] = 2  # 2 = I-ML
 
                 # get list of tags
