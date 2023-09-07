@@ -1,8 +1,8 @@
-one column? -> good = 23 docs
+one column? = 23 docs
 
-two columns? -> bad = 27 docs
+two columns = 27 docs
 
-format: 
+name of a doc: 
 number_of_the_document_in_the_original_excel_table  +  year  +  scimango_journal_quartile(0-4 or X)  +  number_of_google_scholar_citiations
 
 
